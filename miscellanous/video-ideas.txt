@@ -1,0 +1,18 @@
+"Scala for Full Stack Development: An Experience Report" Video Ideas
+
+Options - Jack holding a null cup looking at a coffee machine, wanting more options </
+Asynchrony - Jack standing in a synchronous queue wishing for more asynchrony </
+Type inference - Jack carrying around a sign with his type on it </
+Pattern matching - Jack walking into the women's bathroom </
+Map/loops - Jack going round in circles then someone hands him a map X
+Scala bar - Video zooming in on the sign X
+
+Commentary
+
+[Jack with arms out]                    Meet Jack. Jack spends much of his day wishing life was more like Scala. 
+[Jack with null coffee]                 In the morning, Jack feels like things would be much better with more options,
+[Jack in lunch line]				            And by lunchtime, he's wishing the sandwich line could be more asynchronous.
+[Jack going into wrong toilet]          His afternoon breaks would be much easier with some pattern matching.   
+[Jack in loops]                         And he often finds himself going in loops on the way home without a map.
+[Jack with Person[Jack] sign]           Sorry Jack but for now you're going to have to keep carrying round that type baggage.
+[Scala bar + Try{scala}.recover(inBar)] Unless, you join us for "Scala for Full Stack Development: An Experience Report".

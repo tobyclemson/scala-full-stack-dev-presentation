@@ -1,0 +1,29 @@
+# What is the title of your session?
+Scala for Full Stack Development: An Experience Report
+
+# Who else will be presenting/facilitating this session?
+Possibly someone from the Loyal3 team in San Francisco
+
+# What is the format of this session?
+Presentation
+
+# How much time will the session take?
+30 minutes
+
+# Please provide an abstract or summary of your session.
+By away day, there will have been a team using Scala for application development, testing at all levels, build and deployment for over 4 months on the first Scala project in the US. We plan to present our experience with the language including common pitfalls, major strengths, tools and frameworks, patterns popular with the Scala community and our overall view on whether it should be proposed to our clients in future projects.
+
+# What category best encompasses your session? 
+Technical
+
+# What type of audience is your session designed for?
+Aimed at anybody interested in applying Scala to the kinds of problems we solve on a daily basis. 
+
+# Have you presented or ran this session before? If so, where? 
+Parts of it may have been presented at a San Francisco home office day or lunch.
+
+# What materials, setup, etc are required for your session?
+A projector with a MacBook Pro mini DVI adapter should be the only thing needed.
+
+# Anything else we should know?
+No

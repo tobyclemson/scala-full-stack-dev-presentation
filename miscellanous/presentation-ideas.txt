@@ -1,0 +1,44 @@
+Topics proposed
+* Common pitfalls
+  -> SBT
+	-> Testing in Play
+	-> Ecosystem maturity, e.g., coverage tools, build tools, things you take for granted 
+		 in Java
+  -> Implicits ?
+* Major strengths
+  -> Case classes
+	-> Pattern matching
+	-> Collections manipulation, folding, mapping etc.
+* Tools and frameworks
+  -> Play
+  -> SBT
+	-> Specs2
+	-> Cucumber JVM
+	-> IntelliJ 12 support is *not bad*
+			 - still limited support for refactoring
+			 - the IDE can tell you there's a problem when actually there isn't
+			 - limited IntelliJ support for Cucumber JVM
+* Popular patterns
+  -> Cake pattern? -> kind of complicated...will we have time?
+  -> Either and Option
+* Scala community
+
+What common problems in Java does Scala solve and how?
+
+High level overview
+* [10 minutes] Introduction to Scala - scala basics, informative, what the language can do, 
+  what tools and frameworks are out there and the problems they solve
+  -> language examples
+  -> side by side with Java, look into using examples from Scala in Action
+  -> error mapping?
+* [10 minutes] Experience report - the features/tools/patterns we've used and what we think 	
+  of them, more subjective and experiential
+* [4-5 minutes] Conclusions
+	-> Language features provide lots of flexibility but ecosystem and community are 
+		 behind those in Java land
+		
+Protips
+* Don't use PATCH if you are using Play...they didn't think it was worth implementing
+* Scala is not binary compatible between versions so that library you are using might
+  fail in strange ways at runtime
+* IntelliJ will not tell you reliably that your build has failed
