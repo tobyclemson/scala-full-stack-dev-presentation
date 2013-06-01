@@ -3,7 +3,7 @@
 }
 
 .slides.template-2013naad > article:not(.nobackground):not(.front-page) {
-    background-image: url('../images/tw-logo.png'),
+    background-image: url('../images/tw-logo-opacity-60.png'),
                       url('../images/general-page-left-bg.png'),
                       url('../images/general-page-right-bg.png');
     background-position: 95% 95%, left 32%, right 60%;
@@ -13,7 +13,7 @@
 } 
 
 .slides.template-2013naad article.front-page {
-    background-image: url('../images/tw-logo.png'),
+    background-image: url('../images/tw-logo-opacity-60.png'),
                       url('../images/first-page-fist.png'), 
                       url('../images/first-page-left-bg.png'), 
                       url('../images/first-page-right-bg.png');
