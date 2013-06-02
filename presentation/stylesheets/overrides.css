@@ -38,3 +38,33 @@
     max-width: 88%;
     max-height: 88%;
 }
+
+.slides.template-2013naad article h5 {
+    margin: 10px 0;
+}
+
+.slides.template-2013naad article.smaller pre {
+    margin: 0px;
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.slides.template-2013naad article div.left-comparison-50 {
+    width: 49%;
+    float: left;
+}
+
+.slides.template-2013naad article div.right-comparison-50 {
+    width: 49%;
+    float: right;
+}
+
+.slides.template-2013naad article div.left-comparison-40 {
+    width: 37%;
+    float: left;
+}
+
+.slides.template-2013naad article div.right-comparison-60 {
+    width: 61%;
+    float: right;
+}
