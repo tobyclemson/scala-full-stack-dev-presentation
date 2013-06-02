@@ -49,6 +49,11 @@
     line-height: 13px;
 }
 
+.slides.template-2013naad article ul ul {
+    font-size: 25px;
+    line-height: 30px;
+}
+
 .slides.template-2013naad article div.left-comparison-50 {
     width: 49%;
     float: left;
