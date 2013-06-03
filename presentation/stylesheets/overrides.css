@@ -45,9 +45,16 @@
 
 .slides.template-2013naad article.smaller pre {
     margin: 0px;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.slides.template-2013naad article.smaller pre.tiny {
+    margin: 0px;
     font-size: 13px;
     line-height: 13px;
 }
+
 
 .slides.template-2013naad article ul ul {
     font-size: 25px;
