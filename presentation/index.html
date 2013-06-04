@@ -265,13 +265,56 @@ def main = {
         </ul>
       </article>
 
-      <article>
+      <article class='smaller'>
         <h3>The Language: Enumerations</h3>
-        <ul>
-          <li>java enumeration</li>
-          <li>scala true enumeration</li>
-          <li>scala enumeration pattern, sealed abstract class, implementations, compiler checks of pattern matching</li>
-        </ul>
+          <h5>Java Enumeration</h5>
+          <pre>
+public enum DaysOfWeek {
+  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+
+  public static final EnumSet<Weekday> WEEKENDS = EnumSet.range(SATURDAY, SUNDAY);
+  public final boolean isWeekend() { return WEEKENDS.contains(this);}
+}
+</pre>
+          <h5>Scala true Enumeration</h5>
+          <pre>
+class WeekdayType extends TypeReference[Weekday.type]
+object Weekday extends Enumeration {
+	type Weekday = Value
+	val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
+}
+</pre>
+		<div class='left-comparison-50'>
+			<h5>Scala Enumeration Pattern</h5>
+          <pre>
+sealed abstract class Weekday{
+	def isWeekend: Boolean
+}
+case class Sunday() extends Weekday {
+	def isWeekend = true
+}
+case class Monday() extends Weekday {
+	def isWeekend = false
+}
+...
+
+</pre>
+</div>
+<div class='right-comparison-50'>
+	<h5>Pattern Matching Made Easy</h5>
+	          <pre>
+def whatShouldIDo(weekday:Weekday) = {
+  weekday match { 
+    case Monday() =>
+      println("Go Play!")
+  } 
+}
+
+warning: match may not be exhaustive.
+It would fail on the following input: 
+    Sunday()
+	</pre>
+</div>
       </article>
 
       <article>
@@ -288,17 +331,47 @@ def main = {
         </ul>
       </article>
 
-      <article>
-        <h3>The Language: Example 2</h3>
-        <ul>
-          <li>Stub Builder</li>
+      <article class='smaller'>
+        <h3 style='margin-bottom:10px'>The Language: Example 2</h3>
+		<div class='left-comparison-60'>
+          <pre >
+case class StubResponseBuilder(
+  private val headers: Seq[StubHeader] = Seq.empty) {
+  def buildJsonString = s"""
+    |{
+    |  "statusCode" : "200",
+    |  "body" : "null",
+    |  "headers" : [
+    |    ${headers.map(StubHeaderBuilder().from(_).buildJsonString).mkString(",")}
+    |  ]
+    |}
+    """.stripMargin
+}
+
+case class StubHeaderBuilder (
+  private val key: String = "",
+  private val value: String = "") {
+    def from(header: StubHeader) = copy(key = header.key, value = header.value)
+	
+    def buildObject = StubHeader(key, value)
+    def buildJsonString = s"""
+      |{
+      |	"key" : "$key",
+      |	"value" : "$value"
+      |}
+      """.stripMargin
+    }
+}
+</pre>
+</div>
+<div class='right-comparison-40'>
           <ul>
             <li>copy</li>
             <li>string interpolation and multiline string</li>
             <li>mkString</li>
             <li>default arguments</li>
           </ul>
-        </ul>
+</div>
       </article>
 
 
