@@ -55,6 +55,10 @@
     line-height: 13px;
 }
 
+.slides.template-2013naad article .presenter-notes {
+    display: none;
+}
+
 
 .slides.template-2013naad article ul ul {
     font-size: 25px;

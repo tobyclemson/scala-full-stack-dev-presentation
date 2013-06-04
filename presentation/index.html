@@ -46,6 +46,7 @@
             <li>Future</li>
             <li>Enumerations</li>
             <li>Type Inference</li>
+            <li>Real Life Examples</li>
           </ul>
           <li>The tooling and techniques</li>
           <ul style='display: none;'>
@@ -69,10 +70,13 @@
       <article>
         <h3>Introductions: Who are we?</h3>
         <ul class='build'>
-          <li>Have both been on the first Scala project in the US for the last 3-4 months</li>
+          <li>Have both been on the first full stack Scala project in the US for the last 3-4 months</li>
           <li>Learnt Scala as we went along with no specific experience prior to the project</li>
           <li>Have had varied levels of exposure to functional programming</li>
         </ul>
+        <p class='presenter-notes'>
+          Talk a little about the client, what they are doing, what we are doing for them.
+        </p>
       </article>
 
       <article>
@@ -80,11 +84,24 @@
           Introductions: What are we using Scala for?
         </h3>
         <img class='greedy-slide-image' src='images/big-picture.png'
-             alt="Diagram showing the architecture in which we are using Scala"/>
+             alt='Diagram showing the architecture in which we are using Scala'/>
+        <p class='presenter-notes'>
+          Describe the technology stack, lots of integration points, using micro-services
+          Using Play and DropWizard, relatively simple domain, mostly coordination
+        </p>
       </article>
 
       <article>
         <h2>The Language</h2>
+      </article>
+
+      <article>
+        <h3>The Language: Type Inference</h3>
+        <ul>
+          <li>example of generic type and inference</li>
+          <li>example of where type inference goes wrong, var thing = None, thing = Option("something")
+          <li>beware methods need = to have return type</li>
+        </ul>
       </article>
 
       <article class='smaller'>
@@ -133,6 +150,10 @@ public class Person {
 }
           </pre>
         </div>
+        <p class='presenter-notes'>
+          Much less code
+          'var' implies mutable objects, with auto generated getters and setters
+        </p>
       </article>
 
       <article class='smaller'>
@@ -184,6 +205,13 @@ public class Person
     java.lang.String);
 }</pre>
         </div>
+        <p class='presenter-notes'>
+          Immutable by default
+          Value type semantics, equals, hash code and to string do the right thing
+          Readers for all non private fields
+          Copy constructors using named parameters and defaults from constructor
+          Pattern matchable
+        </p>
       </article>
 
       <article>
@@ -199,31 +227,80 @@ def retrieveObject: Outcome = {…}
 def main = {
   retrieveObject match { outcome => 
     case Success(object) => println(s“I found it: ${object}!”)
-    case Error => println(“I couldn’t find it :(”)
+    case Error() => println(“I couldn’t find it :(”)
     case _ => println(“I don’t know what happened...”)
   }
 }</pre>
+        <p class='presenter-notes'>
+          Allows you to match the different possible return values from a method to how you want to deal with those return values
+          Used alongside case classes, you get readable mappings of type to action to be performed
+          Matches can have arguments so that values can be extracted from them for use in the corresponding action
+          Reduces the need for null checking or exception handling
+          The final case is a wildcard matching anything not yet matched
+        </p>
       </article>
 
       <article>
         <h3>The Language: Collection Manipulation</h3>
+        <ul>
+          <li>map, flatMap</li>
+          <li>reduce, mkString</li>
+          <li>filter</li>
+          <li>foreach</li>
+        </ul>
       </article>
 
       <article>
         <h3>The Language: Option/Either</h3>
+        <ul>
+          <li>using option to avoid ifs and nulls, map, flatMap, getOrElse</li>
+          <li>using either for possible failure or success, good to use with pattern matching</li>
+        </ul>
       </article>
 
       <article>
         <h3>The Language: Futures</h3>
+        <ul>
+          <li>map, flatMap, recover</li>
+        </ul>
       </article>
 
       <article>
         <h3>The Language: Enumerations</h3>
+        <ul>
+          <li>java enumeration</li>
+          <li>scala true enumeration</li>
+          <li>scala enumeration pattern, sealed abstract class, implementations, compiler checks of pattern matching</li>
+        </ul>
       </article>
 
       <article>
-        <h3>The Language: Type Inference</h3>
+        <h3>The Language: Example 1</h3>
+        <ul>
+          <li>Encryption Key</li>
+          <ul>
+            <li>collection manipulation</li>
+            <li>case class</li>
+            <li>companion object</li>
+            <li>use of apply</li>
+            <li>underscore wildcard</li>
+          </ul>
+        </ul>
       </article>
+
+      <article>
+        <h3>The Language: Example 2</h3>
+        <ul>
+          <li>Stub Builder</li>
+          <ul>
+            <li>copy</li>
+            <li>string interpolation and multiline string</li>
+            <li>mkString</li>
+            <li>default arguments</li>
+          </ul>
+        </ul>
+      </article>
+
 
       <article>
         <h2>The Tooling and Techniques</h2>
@@ -231,6 +308,14 @@ def main = {
 
       <article>
         <h3>The Tooling and Techniques: Compilation</h3>
+        <ul>
+          <li>Very slow! All those features come at a cost.</li>
+          <li>Developer workstations need to be very powerful</li>
+          <li>We've resorted to using RAMDISKs to run our build in a reasonable time</li>
+          <li>16GB memory, 2.5 GHz, 2 cores</li>
+          <li>Build with clean: 1720 seconds = 28.66 minutes</li>
+          <li>Build without clean: </li>
+        </ul>
       </article>
 
       <article>
