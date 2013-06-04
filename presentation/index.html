@@ -320,10 +320,25 @@ def main = {
 
       <article>
         <h3>The Tooling and Techniques: Build</h3>
+        <ul>
+          <li>SBT is the build tool of choice</li>
+          <li>Considered Gradle which has full Scala support, however no real Play support</li>
+          <li>Has a steep learning curve, once basic principles have been understood, is quite powerful although don't run away with it.</li>
+          <li>Build scripts are just Scala</li>
+          <li>Good support for multi module projects, easy to define cross module dependencies</li>
+          <li>IDE configuration generated from project definition, relatively reliable</li>
+        </ul>
       </article>
 
       <article>
         <h3>The Tooling and Techniques: Testing</h3>
+        <ul>
+          <li>Lots of options: Specs2, ScalaTest, ScalaMock, Mockito</li>
+          <li>Had most success with Specs2 and Mockito</li>
+          <li>Specs2 model quite difficult to get to grips with, strange type system hackery, before/after/around complicated to use, don't follow convention, tests run in parallel by default.</li>
+          <li>Mockito interop has a few wrinkles but on the whole has been successful.</li>
+          <li>Also use CucumberJVM for end to end testing, has some Scala support although no IDE support.</li>          
+        </ul>
       </article>
 
       <article>
