@@ -267,26 +267,29 @@ def main = {
 
       <article class='smaller'>
         <h3>The Language: Enumerations</h3>
-          <h5>Java Enumeration</h5>
-          <pre>
+        <div class='build'>
+          <div>
+            <h5>Java Enumeration</h5>
+            <pre>
 public enum DaysOfWeek {
   MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
   public static final EnumSet<Weekday> WEEKENDS = EnumSet.range(SATURDAY, SUNDAY);
   public final boolean isWeekend() { return WEEKENDS.contains(this);}
-}
-</pre>
-          <h5>Scala true Enumeration</h5>
-          <pre>
-class WeekdayType extends TypeReference[Weekday.type]
+}</pre>
+          </div>
+          <div>
+            <h5>Scala true Enumeration</h5>
+            <pre>
 object Weekday extends Enumeration {
 	type Weekday = Value
 	val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
-}
-</pre>
-		<div class='left-comparison-50'>
-			<h5>Scala Enumeration Pattern</h5>
-          <pre>
+}</pre>
+          </div>
+          <div>
+	    <div class='left-comparison-50'>
+	      <h5>Scala Enumeration Pattern</h5>
+              <pre>
 sealed abstract class Weekday{
 	def isWeekend: Boolean
 }
@@ -296,13 +299,11 @@ case class Sunday() extends Weekday {
 case class Monday() extends Weekday {
 	def isWeekend = false
 }
-...
-
-</pre>
-</div>
-<div class='right-comparison-50'>
-	<h5>Pattern Matching Made Easy</h5>
-	          <pre>
+...</pre>
+            </div>
+            <div class='right-comparison-50'>
+	      <h5>Pattern Matching Made Easy</h5>
+	      <pre>
 def whatShouldIDo(weekday:Weekday) = {
   weekday match { 
     case Monday() =>
@@ -310,11 +311,12 @@ def whatShouldIDo(weekday:Weekday) = {
   } 
 }
 
-warning: match may not be exhaustive.
-It would fail on the following input: 
-    Sunday()
-	</pre>
-</div>
+// warning: match may not be exhaustive.
+// It would fail on the following input: 
+//     Sunday()</pre>
+            </div>
+          </div>
+        </div>
       </article>
 
       <article>
