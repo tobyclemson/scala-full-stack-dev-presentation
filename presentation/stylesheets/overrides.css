@@ -39,6 +39,20 @@
     max-height: 88%;
 }
 
+.slides.template-2013naad article img.medium-slide-image {
+    max-width: 40%;
+    max-height: 40%;
+	display: inline;
+	margin: 10px;
+}
+
+.slides.template-2013naad article img.small-slide-image {
+    max-width: 20%;
+    max-height: 20%;
+	display: inline;
+	margin: 10px;
+}
+
 .slides.template-2013naad article h5 {
     margin: 10px 0;
 }
@@ -83,4 +97,9 @@
 .slides.template-2013naad article div.right-comparison-60 {
     width: 61%;
     float: right;
+}
+
+.slides.template-2013naad article div.specs2-img {
+	display:block;
+	background:transparent url("../images/specs2.png") no-repeat;
 }
