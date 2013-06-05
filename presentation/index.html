@@ -240,14 +240,40 @@ def main = {
         </p>
       </article>
 
-      <article>
+      <article class='smaller'>
         <h3>The Language: Collection Manipulation</h3>
-        <ul>
-          <li>map, flatMap</li>
-          <li>reduce, mkString</li>
-          <li>filter</li>
-          <li>foreach</li>
-        </ul>
+<h5>Map, mkString, foreach, reduce</h5>
+<div class='left-comparison-60'>
+		<pre>
+val A = Seq(1, 2, 3, 4, 5)
+
+val B = A.map (_ * 2)                          >> B: Seq[Int] = List(2, 4, 6, 8, 10)
+
+val C = A.mkString(",")                        >> C: String = 1,2,3,4,5
+
+A foreach print                                >> 12345
+
+val E = A.map(_.toString).reduce(_+ ";" + _)   >> E: String = 1;2;3;4;5</pre>
+</div>
+
+  <h5>Map vs FlatMap</h5>
+    <pre>
+val Words = Seq("North", "America", "Away", "Day")
+
+Words.map(_.toList)
+>> Seq[List[Char]] = List(List(N, o, r, t, h), List(A, m, e, r, i, c, a), 
+                          List(A, w, a, y), List(D, a, y))
+
+Words.flatMap(_.toList)
+>> Seq[Char] = List(N, o, r, t, h, A, m, e, r, i, c, a, A, w, a, y, D, a, y) </pre>
+
+  <h5>Filter</h5>
+    <pre>
+def whiteList = configuration.downloadUrlsWhiteList
+
+def isUrlNotAllowedToBeDownloaded(downloadUri: Uri): Boolean = {
+  whiteList.filter(whiteListUrl => downloadUrl.startsWith(whiteListUrl)).isEmpty
+}</pre>
       </article>
 
       <article>
@@ -341,7 +367,6 @@ case class StubResponseBuilder(
   private val headers: Seq[StubHeader] = Seq.empty) {
   def buildJsonString = s"""
     |{
-    |  "statusCode" : "200",
     |  "body" : "null",
     |  "headers" : [
     |    ${headers.map(StubHeaderBuilder().from(_).buildJsonString).mkString(",")}
@@ -364,15 +389,19 @@ case class StubHeaderBuilder (
       """.stripMargin
     }
 }
+
+Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
+                            "content-type" -> "application/json")).buildJsonString
+>> response = 
+  "{"body" : "null", 
+  "headers" : [ 
+    {"key": "Location", 
+     "value" : },
+    {"key" : "content-type",
+     "value" : "application/json"}
+    ]
+  }"
 </pre>
-</div>
-<div class='right-comparison-40'>
-          <ul>
-            <li>copy</li>
-            <li>string interpolation and multiline string</li>
-            <li>mkString</li>
-            <li>default arguments</li>
-          </ul>
 </div>
       </article>
 
