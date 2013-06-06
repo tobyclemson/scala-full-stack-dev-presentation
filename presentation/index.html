@@ -322,15 +322,35 @@ def isUrlNotAllowedToBeDownloaded(downloadUri: Uri): Boolean = {
 }</pre>
       </article>
 
-      <article>
+      <article class='medium'>
 		<p class='presenter-notes'>
 			Toby speaking
 		</p>
         <h3>The Language: Option/Either</h3>
-        <ul>
-          <li>using option to avoid ifs and nulls, map, flatMap, getOrElse</li>
-          <li>using either for possible failure or success, good to use with pattern matching</li>
-        </ul>
+<p>Either is good to use with success and failure cases</p>
+<pre>
+def getResource(): Either[RetrievalError, Resource] = {...}
+
+getResource.right.map{ resource => 
+	return resource
+}.left.map{
+	case error: ResourceAlreadyRetrieved => ...
+	case error: ResourceNotFound => ...
+	case _: UnexpectedFailure => ...
+}.merge
+	</pre>
+<p>Using options to avoid null checking and handle errors in mapping</p>
+<pre>
+def getPageNumber(request: Request[AnyContent]) ={
+  request.getQueryString("pageNumber").map(_.toInt).getOrElse(0)
+}
+
+def getContentType(response: HttpResponse) = {
+  response.getHeader("Content-Type")
+  .map(_.split(";").toIterator.next())
+  .getOrElse(null)
+}
+	</pre>
       </article>
 
       <article class='smaller'>
