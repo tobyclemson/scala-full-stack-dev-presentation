@@ -42,15 +42,15 @@
 .slides.template-2013naad article img.medium-slide-image {
     max-width: 40%;
     max-height: 40%;
-	display: inline;
-	margin: 10px;
+    display: inline;
+    margin: 10px;
 }
 
 .slides.template-2013naad article img.small-slide-image {
     max-width: 20%;
     max-height: 20%;
-	display: inline;
-	margin: 10px;
+    display: inline;
+    margin: 10px;
 }
 
 .slides.template-2013naad article h5 {

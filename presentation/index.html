@@ -30,7 +30,7 @@
 
       <article>
 	<p class='presenter-notes'>
-		Toby speaking
+	  Toby speaking
 	</p>
         <h3>Here's how we hope it's going to go</h3>
         <ul>
@@ -71,9 +71,9 @@
       </article>
 
       <article>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>Introductions: Who are we?</h3>
         <ul class='build'>
           <li>Have both been on the first full stack Scala project in the US for the last 3-4 months</li>
@@ -86,9 +86,9 @@
       </article>
 
       <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>
           Introductions: What are we using Scala for?
         </h3>
@@ -105,43 +105,42 @@
       </article>
 
       <article class='medium'>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Language: Type Inference</h3>
-<p>Basic Type Inference</p>
-<pre>
+        <h5>Basic Type Inference</h5>
+        <pre>
 val mapOfStrings = Map("one" -> "two", "three" -> "four")
->> mapOfStrings: scala.collection.immutable.Map[String,String] 
-                               = Map(one -> two, three -> four)
-</pre>
-<p>Beware of subtypes</p>
-		<pre>
-var optionalThing: Option[String] = None 
->> optionalThing: Option[String] = None
-optionalThing = Option("Hello") 
->> optionalThing: Option[String] = Some(Hello)
-
-			
-var thing = None 
->> thing: None.type = None
-thing = Option("Hello") 
->> error: type mismatch; found:Option[String] required:None.type</pre
-<p>Methods can change without return types</p>
+>> mapOfStrings: scala.collection.immutable.Map[String,String] = 
+     Map(one -> two, three -> four)</pre>
+        <h5>Beware of Subtypes</h5>
+	<pre>
+var thing1: Option[String] = None 
+>> thing1: Option[String] = None
+thing1 = Option("Hello") 
+>> thing1: Option[String] = Some(Hello)
+		
+var thing2 = None 
+>> thing2: None.type = None
+thing2 = Option("Hello") 
+>> error: type mismatch; found:Option[String] required:None.type</pre>
+<h5>Common Mistake: No = Symbol!</h5>
 <pre>
-Without Type Definition: 
-def getSomething() { "Something"} >> getSomething: ()Unit
-getSomething >> 
+// Without =
+def getSomething() { "Something"} 
+>> getSomething: ()Unit
 
-With Type Definition: 
-def getSomething():String = {"Something"} >> getSomething: ()String
-getSomething >> String = Something	</pre>
+// With =
+def getSomething() = {"Something"} 
+>> getSomething: ()String
+</pre>
       </article>
 
       <article class='smaller'>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Language: Classes</h3>
         <div class='left-comparison-50'>
           <h5>Scala</h5>
