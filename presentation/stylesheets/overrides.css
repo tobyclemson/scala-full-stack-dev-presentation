@@ -57,6 +57,12 @@
     margin: 10px 0;
 }
 
+.slides.template-2013naad article.medium pre {
+    margin: 0px;
+    font-size: 16px;
+    line-height: 16px;
+}
+
 .slides.template-2013naad article.smaller pre {
     margin: 0px;
     font-size: 14px;
