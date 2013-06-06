@@ -420,21 +420,36 @@ def whatShouldIDo(weekday:Weekday) = {
         </ul>
       </article>
 
-      <article>
+      <article class='medium'>
 		<p class='presenter-notes'>
 			Toby speaking
 		</p>
         <h3>The Language: Example 1</h3>
-        <ul>
-          <li>Encryption Key</li>
+          <h5>Encryption Key</h5>
+<pre>
+case class EncryptionKey(value: Seq[Byte]) {
+  def toHexString = value.map("%02x" format _).mkString
+}
+
+object EncryptionKey {
+  val rng = new SecureRandom()
+
+  def randomKey():EncryptionKey = {
+    val bytes = Array.ofDim[Byte](32)
+    rng.nextBytes(bytes)
+    apply(bytes)
+  }
+
+  def fromHexString(hex: String):EncryptionKey = {
+    EncryptionKey(hex.sliding(2,2).toArray.map(Integer.parseInt(_, 16).toByte))
+  }
+}
+	</pre>
           <ul>
-            <li>collection manipulation</li>
-            <li>case class</li>
-            <li>companion object</li>
-            <li>use of apply</li>
+            <li>collection manipulation, use of apply</li>
+            <li>case class, companion object</li>
             <li>underscore wildcard</li>
           </ul>
-        </ul>
       </article>
 
       <article class='smaller'>
