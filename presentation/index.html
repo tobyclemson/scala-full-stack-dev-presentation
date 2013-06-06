@@ -104,16 +104,38 @@
         <h2>The Language</h2>
       </article>
 
-      <article>
+      <article class='medium'>
 		<p class='presenter-notes'>
 			Toby speaking
 		</p>
         <h3>The Language: Type Inference</h3>
-        <ul>
-          <li>example of generic type and inference</li>
-          <li>example of where type inference goes wrong, var thing = None, thing = Option("something")
-          <li>beware methods need = to have return type</li>
-        </ul>
+<p>Basic Type Inference</p>
+<pre>
+val mapOfStrings = Map("one" -> "two", "three" -> "four")
+>> mapOfStrings: scala.collection.immutable.Map[String,String] 
+                               = Map(one -> two, three -> four)
+</pre>
+<p>Beware of subtypes</p>
+		<pre>
+var optionalThing: Option[String] = None 
+>> optionalThing: Option[String] = None
+optionalThing = Option("Hello") 
+>> optionalThing: Option[String] = Some(Hello)
+
+			
+var thing = None 
+>> thing: None.type = None
+thing = Option("Hello") 
+>> error: type mismatch; found:Option[String] required:None.type</pre
+<p>Methods can change without return types</p>
+<pre>
+Without Type Definition: 
+def getSomething() { "Something"} >> getSomething: ()Unit
+getSomething >> 
+
+With Type Definition: 
+def getSomething():String = {"Something"} >> getSomething: ()String
+getSomething >> String = Something	</pre>
       </article>
 
       <article class='smaller'>
