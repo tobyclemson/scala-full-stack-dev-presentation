@@ -85,6 +85,23 @@
     line-height: 30px;
 }
 
+
+.slides.template-2013naad article.medium ul ul {
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.slides.template-2013naad article.medium ul {
+    font-size: 25px;
+    line-height: 30px;
+}
+
+.slides.template-2013naad article ul.small-list{
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
 .slides.template-2013naad article div.left-comparison-50 {
     width: 49%;
     float: left;
@@ -109,3 +126,13 @@
 	display:block;
 	background:transparent url("../images/specs2.png") no-repeat;
 }
+
+.slides.template-2013naad article img.play-img {
+	margin-top: 75px;
+}
+
+.slides.template-2013naad article .no-offset {
+	margin-top: 10px;
+}
+
+

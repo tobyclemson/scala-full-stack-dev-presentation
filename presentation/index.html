@@ -193,58 +193,31 @@ public class Person {
         </p>
       </article>
 
-      <article class='smaller'>
+      <article>
 		<p class='presenter-notes'>
 			Amanda speaking
 		</p>
         <h3>The Language: Case Classes</h3>
-        <div class='left-comparison-40'>
-          <h5>Scala</h5>
+        <div>
           <pre>
 case class Person(
   firstName: String, 
-  private middleInitial: String, 
+  private val middleInitial: String, 
   val lastName: String
 )</pre>
+<ul class='small-list'>
+  <li>Immutable</li>
+  <li>Value type equals</li>
+  <li>Copy constructors</li>
+  <li>Pattern matchable</li>
+</ul>
+<pre>
+val newPerson = Person("First", "M", "Last") 
+newPerson.copy(firstName = "Bob") >> Person(Bob,M,Last)
+newPerson.firstName >> "First"
+</pre>
         </div>
-        <div class='right-comparison-60'>
-          <h5>Java</h5>
-          <pre class='tiny'>
-public class Person 
-  extends java.lang.Object 
-  implements scala.Product, 
-             scala.Serializable {
-  
-  private final java.lang.String firstName;
-  private final java.lang.String middleInitial;
-  private final java.lang.String lastName;
-  public static scala.Function1 tupled();
-  public static scala.Function1 curried();
-  private java.lang.String middleInitial();
-  public java.lang.String middleInitial$1();
-  public java.lang.String firstName();
-  public java.lang.String lastName();
-  public Person copy(
-    java.lang.String, 
-    java.lang.String, 
-    java.lang.String);
-  public java.lang.String copy$default$1();
-  public java.lang.String copy$default$2();
-  public java.lang.String copy$default$3();
-  public java.lang.String productPrefix();
-  public int productArity();
-  public java.lang.Object productElement(int);
-  public scala.collection.Iterator productIterator();
-  public boolean canEqual(java.lang.Object);
-  public int hashCode();
-  public java.lang.String toString();
-  public boolean equals(java.lang.Object);
-  public Person(
-    java.lang.String, 
-    java.lang.String, 
-    java.lang.String);
-}</pre>
-        </div>
+
         <p class='presenter-notes'>
           Immutable by default
           Value type semantics, equals, hash code and to string do the right thing
@@ -485,19 +458,11 @@ case class StubHeaderBuilder (
       """.stripMargin
     }
 }
-
-Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
-                            "content-type" -> "application/json")).buildJsonString
->> response = 
-  "{"body" : "null", 
-  "headers" : [ 
-    {"key": "Location", 
-     "value" : },
-    {"key" : "content-type",
-     "value" : "application/json"}
-    ]
-  }"
 </pre>
+<ul>
+	<li>String interpolation</li>
+	<li>Builders use copy</li>
+</ul>
 </div>
       </article>
 
@@ -536,7 +501,7 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
         </ul>
       </article>
 
-      <article>
+      <article class='medium'>
 		<p class='presenter-notes'>
 			Amanda speaking
 		</p>
@@ -551,11 +516,28 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
 			<img class='small-slide-image' src='images/scalaMock-logo.png'
 				alt='Scala Mock Logo'/>
 		</div>
-        <ul>
-          <li>Had most success with Specs2 and Mockito</li>
-          <li>Specs2 model quite difficult to get to grips with, strange type system hackery, before/after/around complicated to use, don't follow convention, tests run in parallel by default.</li>
-          <li>Mockito interop has a few wrinkles but on the whole has been successful.</li>
-          <li>Also use CucumberJVM for end to end testing, has some Scala support although no IDE support.</li>          
+        <ul style='margin-top:5px'>
+          <li>Specs2:</li>
+		<pre>
+"AcceptanceSpec should" in {
+  "Load the page when api calls are successful" in {
+    ...
+    status(response) mustEqual 200
+  }
+}</pre>
+			<ul>
+ 			<li>model quite difficult to get to grips with
+	 		<li>before/after/around was complicated
+		 	<li>tests run in parallel by default</li>
+		</ul>
+          <li>Mockito:</li>
+			<ul>
+ 			<li>interop has a few wrinkles but on the whole has been successful.</li>
+			</ul>
+          <li>CucumberJVM</li>   
+       		<ul>
+			<li>Poor IDE Support</li>
+			</ul>
         </ul>
       </article>
 
@@ -564,6 +546,12 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
 			Amanda speaking
 		</p>
         <h3>The Tooling and Techniques: IDE</h3>
+		<h4>Intellij vs. Eclipse</h4>
+	    <ul>
+		  <li> Intellij 12 necessary</li>
+		  <li>Play and Scala plugins</li>
+		  <li>False negative</li>
+		</ul>
       </article>
 
       <article>
@@ -571,13 +559,29 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
 			Toby speaking
 		</p>
         <h3>The Tooling and Techniques: Frameworks</h3>
-      </article>
+		<h5>Others: Spray, Lift, Scalatra<h5>
 
-      <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
-        <h3>The Tooling and Techniques: Dependency Injection</h3>
+		<div class='left-comparison-50'>
+	 	  <img class='medium-slide-image play-img' src='images/play-logo.png'
+             alt='Play Logo'/>
+		  <ul class='no-offset'>
+			<li>+ Asynchronous way of programming</li>
+			<li>+ Hot reloading</li>
+			<li>- Firing up entire app while testing</li>
+			<li>- Difficult to test, lots of statics</li>
+		  </ul>
+		</div>
+		<div class='right-comparison-50'>
+			<div>
+		<img class='small-slide-image paragraph-icon' src='images/dropwizard-hat.png'
+		     alt='Dropwizard Logo'/>
+		<h4 style="display:inline">Dropwizard</h4>
+		<ul class='no-offset'>
+			<li>+ </li>
+			<li>+ </li>
+			<li>- </li>
+		  </ul>
+		</div>			
       </article>
 
       <article>
@@ -590,6 +594,11 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
 		alt='Scala Code Coverage Tool Logo'/>
 	<img class='medium-slide-image' src='images/jacoco-logo.png'
 		alt='Jacoco Logo'/>
+		<ul>
+		  <li>Difficultly with multi-modules</li>
+		  <li>Generated code gets in the way</li>
+		  <li>Java tools don't give accurate reports</li>
+		</ul>
 </div>
       </article>
 
