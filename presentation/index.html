@@ -458,19 +458,11 @@ case class StubHeaderBuilder (
       """.stripMargin
     }
 }
-
-Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
-                            "content-type" -> "application/json")).buildJsonString
->> response = 
-  "{"body" : "null", 
-  "headers" : [ 
-    {"key": "Location", 
-     "value" : },
-    {"key" : "content-type",
-     "value" : "application/json"}
-    ]
-  }"
 </pre>
+<ul>
+	<li>String interpolation</li>
+	<li>Builders use copy</li>
+</ul>
 </div>
       </article>
 
@@ -567,13 +559,29 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
 			Toby speaking
 		</p>
         <h3>The Tooling and Techniques: Frameworks</h3>
-      </article>
+		<h5>Others: Spray, Lift, Scalatra<h5>
 
-      <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
-        <h3>The Tooling and Techniques: Dependency Injection</h3>
+		<div class='left-comparison-50'>
+	 	  <img class='medium-slide-image play-img' src='images/play-logo.png'
+             alt='Play Logo'/>
+		  <ul class='no-offset'>
+			<li>+ Asynchronous way of programming</li>
+			<li>+ Hot reloading</li>
+			<li>- Firing up entire app while testing</li>
+			<li>- Difficult to test, lots of statics</li>
+		  </ul>
+		</div>
+		<div class='right-comparison-50'>
+			<div>
+		<img class='small-slide-image paragraph-icon' src='images/dropwizard-hat.png'
+		     alt='Dropwizard Logo'/>
+		<h4 style="display:inline">Dropwizard</h4>
+		<ul class='no-offset'>
+			<li>+ </li>
+			<li>+ </li>
+			<li>- </li>
+		  </ul>
+		</div>			
       </article>
 
       <article>
@@ -586,6 +594,11 @@ Ex. StubResponseBuilder(Seq("Location" -> "http://thoughtworks.com",
 		alt='Scala Code Coverage Tool Logo'/>
 	<img class='medium-slide-image' src='images/jacoco-logo.png'
 		alt='Jacoco Logo'/>
+		<ul>
+		  <li>Difficultly with multi-modules</li>
+		  <li>Generated code gets in the way</li>
+		  <li>Java tools don't give accurate reports</li>
+		</ul>
 </div>
       </article>
 
