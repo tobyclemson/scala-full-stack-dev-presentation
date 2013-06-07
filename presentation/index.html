@@ -29,44 +29,6 @@
       </article>
 
       <article>
-	<p class='presenter-notes'>
-	  Toby speaking
-	</p>
-        <h3>Here's how we hope it's going to go</h3>
-        <ul>
-          <li>Introductions</li>
-          <ul>
-            <li>Who are we?</li>
-            <li>What are we using Scala for?</li>
-          </ul>
-          <li>The language</li>
-          <ul style='display: none;'>
-            <li>Classes</li>
-            <li>Case Classes</li>
-            <li>Pattern Matching</li>
-            <li>Collection Manipulation</li>
-            <li>Option/Either</li>
-            <li>Future</li>
-            <li>Enumerations</li>
-            <li>Type Inference</li>
-            <li>Real Life Examples</li>
-          </ul>
-          <li>The tooling and techniques</li>
-          <ul style='display: none;'>
-            <li>Compilation</li>
-            <li>Build</li>
-            <li>Testing</li>
-            <li>IDE</li>
-            <li>Frameworks</li>
-            <li>Dependency Injection</li>
-            <li>Code Quality Tools</li>
-          </ul>
-          <li>The community</li>
-          <li>Conclusions</li>
-        </ul>
-      </article>
-
-      <article>
         <h2>Introductions</h2>
       </article>
 
@@ -198,7 +160,7 @@ public class Person {
 		</p>
         <h3>The Language: Case Classes</h3>
         <div>
-          <pre>
+          <pre class='no-offset'>
 case class Person(
   firstName: String, 
   private val middleInitial: String, 
@@ -209,8 +171,9 @@ case class Person(
   <li>Value type equals</li>
   <li>Copy constructors</li>
   <li>Pattern matchable</li>
+  <li>Interop with Java</li>
 </ul>
-<pre>
+<pre >
 val newPerson = Person("First", "M", "Last") 
 newPerson.copy(firstName = "Bob") >> Person(Bob,M,Last)
 newPerson.firstName >> "First"
@@ -255,42 +218,55 @@ def main = {
         </p>
       </article>
 
-      <article class='smaller'>
+      <article >
 		<p class='presenter-notes'>
 			Amanda speaking
 		</p>
         <h3>The Language: Collection Manipulation</h3>
 <h5>Map, mkString, foreach, reduce</h5>
-<div class='left-comparison-60'>
+<div>
 		<pre>
 val A = Seq(1, 2, 3, 4, 5)
 
-val B = A.map (_ * 2)                          >> B: Seq[Int] = List(2, 4, 6, 8, 10)
+val B = A.map (_ * 2)                         
+  >> B: Seq[Int] = List(2, 4, 6, 8, 10)
 
-val C = A.mkString(",")                        >> C: String = 1,2,3,4,5
+//NOTE: A.map(singleValue => singleValue*2) == A.map(_*2)
 
-A foreach print                                >> 12345
+val C = A.mkString(",")                      
+  >> C: String = 1,2,3,4,5
 
-val E = A.map(_.toString).reduce(_+ ";" + _)   >> E: String = 1;2;3;4;5</pre>
+A foreach print                              
+  >> 12345
+
+val E = A.map(_.toString).reduce(_+ ";" + _) 
+  >> E: String = 1;2;3;4;5</pre>
 </div>
-
+</article>
+<article >
+	<p class='presenter-notes'>
+		Amanda speaking
+	</p>
+  <h3>The Language: More Collection Manipulation</h3>
   <h5>Map vs FlatMap</h5>
-    <pre>
+    <pre class='no-offset'>
 val Words = Seq("North", "America", "Away", "Day")
-
 Words.map(_.toList)
->> Seq[List[Char]] = List(List(N, o, r, t, h), List(A, m, e, r, i, c, a), 
-                          List(A, w, a, y), List(D, a, y))
+>> Seq[List[Char]] = List(List(N, o, r, t, h), 
+                     List(A, m, e, r, i, c, a), 
+                     List(A, w, a, y), List(D, a, y))
 
 Words.flatMap(_.toList)
->> Seq[Char] = List(N, o, r, t, h, A, m, e, r, i, c, a, A, w, a, y, D, a, y) </pre>
+>> Seq[Char] = List(N, o, r, t, h, A, m, e, r, 
+                    i, c, a, A, w, a, y, D, a, y) </pre>
 
   <h5>Filter</h5>
-    <pre>
+    <pre class='no-offset'>
 def whiteList = configuration.downloadUrlsWhiteList
 
 def isUrlNotAllowedToBeDownloaded(downloadUri: Uri): Boolean = {
-  whiteList.filter(whiteListUrl => downloadUrl.startsWith(whiteListUrl)).isEmpty
+  whiteList.filter(whiteListUrl => 
+    downloadUrl.startsWith(whiteListUrl)).isEmpty
 }</pre>
       </article>
 
@@ -317,15 +293,14 @@ def getPageNumber(request: Request[AnyContent]) ={
   request.getQueryString("pageNumber").map(_.toInt).getOrElse(0)
 }
 
-def getContentType(response: HttpResponse) = {
+def getContentType(response: HttpResponse):Option[HttpResponse] = {
   response.getHeader("Content-Type")
   .map(_.split(";").toIterator.next())
-  .getOrElse(null)
 }
 	</pre>
       </article>
 
-      <article class='smaller'>
+      <article>
 		<p class='presenter-notes'>
 			Amanda speaking
 		</p>
@@ -333,26 +308,35 @@ def getContentType(response: HttpResponse) = {
         <div class='build'>
           <div>
             <h5>Java Enumeration</h5>
-            <pre>
+            <pre class='no-offset'>
 public enum DaysOfWeek {
-  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+  MONDAY, TUESDAY, WEDNESDAY, 
+  THURSDAY, FRIDAY, SATURDAY, SUNDAY;
 
-  public static final EnumSet<Weekday> WEEKENDS = EnumSet.range(SATURDAY, SUNDAY);
-  public final boolean isWeekend() { return WEEKENDS.contains(this);}
+  public static final EnumSet<Weekday> WEEKENDS = 
+	                EnumSet.range(SATURDAY, SUNDAY);
+  public final boolean isWeekend() { 
+	return WEEKENDS.contains(this);
+  }
 }</pre>
           </div>
           <div>
             <h5>Scala true Enumeration</h5>
-            <pre>
+            <pre class='no-offset'>
 object Weekday extends Enumeration {
 	type Weekday = Value
 	val Mon, Tue, Wed, Thu, Fri, Sat, Sun = Value
 }</pre>
           </div>
+</article>
+		<article class='medium'>
+			<p class='presenter-notes'>
+				Amanda speaking
+			</p>
+	        <h3>The Language: Enumerations</h3>
           <div>
-	    <div class='left-comparison-50'>
 	      <h5>Scala Enumeration Pattern</h5>
-              <pre>
+              <pre class='no-offset'>
 sealed abstract class Weekday{
 	def isWeekend: Boolean
 }
@@ -363,10 +347,8 @@ case class Monday() extends Weekday {
 	def isWeekend = false
 }
 ...</pre>
-            </div>
-            <div class='right-comparison-50'>
-	      <h5>Pattern Matching Made Easy</h5>
-	      <pre>
+	      <h5>Compile Time Safety</h5>
+	      <pre class='no-offset'>
 def whatShouldIDo(weekday:Weekday) = {
   weekday match { 
     case Monday() =>
@@ -377,8 +359,6 @@ def whatShouldIDo(weekday:Weekday) = {
 // warning: match may not be exhaustive.
 // It would fail on the following input: 
 //     Sunday()</pre>
-            </div>
-          </div>
         </div>
       </article>
 
@@ -424,29 +404,29 @@ object EncryptionKey {
           </ul>
       </article>
 
-      <article class='smaller'>
+      <article class='medium'>
 		<p class='presenter-notes'>
 			Amanda speaking
 		</p>
-        <h3 style='margin-bottom:10px'>The Language: Example 2</h3>
+        <h3>The Language: Example 2</h3>
 		<div class='left-comparison-60'>
-          <pre >
+          <pre class='no-offset'>
 case class StubResponseBuilder(
   private val headers: Seq[StubHeader] = Seq.empty) {
   def buildJsonString = s"""
-    |{
-    |  "body" : "null",
-    |  "headers" : [
-    |    ${headers.map(StubHeaderBuilder().from(_).buildJsonString).mkString(",")}
-    |  ]
-    |}
-    """.stripMargin
+  |{
+  | "body" : "null",
+  | "headers" : [
+  |  ${headers.map(StubHeaderBuilder().from(_).buildJsonString).mkString(",")}
+  | ]
+  |}
+  """.stripMargin
 }
 
 case class StubHeaderBuilder (
   private val key: String = "",
   private val value: String = "") {
-    def from(header: StubHeader) = copy(key = header.key, value = header.value)
+    def from(header: StubHeader)= copy(key = header.key, value = header.value)
 	
     def buildObject = StubHeader(key, value)
     def buildJsonString = s"""
@@ -458,9 +438,10 @@ case class StubHeaderBuilder (
     }
 }
 </pre>
-<ul>
+<ul class='no-offset'>
 	<li>String interpolation</li>
 	<li>Builders use copy</li>
+	<li>Strict string formatting</li>
 </ul>
 </div>
       </article>
@@ -492,11 +473,18 @@ case class StubHeaderBuilder (
         <h3>The Tooling and Techniques: Build</h3>
         <ul>
           <li>SBT is the build tool of choice</li>
-          <li>Considered Gradle which has full Scala support, however no real Play support</li>
-          <li>Has a steep learning curve, once basic principles have been understood, is quite powerful although don't run away with it.</li>
-          <li>Build scripts are just Scala</li>
-          <li>Good support for multi module projects, easy to define cross module dependencies</li>
-          <li>IDE configuration generated from project definition, relatively reliable</li>
+			<ul>
+				<li>+ support for multi module projects</li>
+				<li>+ easy to define cross module dependencies</li>
+				<li>+ IDE configuration generated from project definition</li>
+				<li>- steep learning curve</li>
+				<li>Build scripts are just Scala</li>
+			</ul>
+          <li>Gradle:</li>
+			<ul>
+				<li>+ full Scala support</li>
+				<li>- no real Play support</li>
+			</ul>
         </ul>
       </article>
 
@@ -545,11 +533,18 @@ case class StubHeaderBuilder (
 			Amanda speaking
 		</p>
         <h3>The Tooling and Techniques: IDE</h3>
-		<h4>Intellij vs. Eclipse</h4>
+		<div style='display:inline-block'>
+		<img class='medium-slide-image paragraph-icon' src='images/intellij-logo.png'
+		     alt='Intellij Logo'/>
+		<span class='bold-vs'>VS</span>
+		<img class='medium-slide-image paragraph-icon' src='images/eclipse-logo.png'
+		     alt='Intellij Logo'/>
+		</div>
 	    <ul>
 		  <li> Intellij 12 necessary</li>
 		  <li>Play and Scala plugins</li>
 		  <li>False negative</li>
+		  <li>Lacks refactoring support</li>
 		</ul>
       </article>
 
@@ -558,28 +553,35 @@ case class StubHeaderBuilder (
 			Toby speaking
 		</p>
         <h3>The Tooling and Techniques: Frameworks</h3>
-		<h5>Others: Spray, Lift, Scalatra<h5>
-
 		<div class='left-comparison-50'>
 	 	  <img class='medium-slide-image play-img' src='images/play-logo.png'
              alt='Play Logo'/>
 		  <ul class='no-offset'>
-			<li>+ Asynchronous way of programming</li>
+			<li>+ Asynchronous </li>
 			<li>+ Hot reloading</li>
 			<li>- Firing up entire app while testing</li>
 			<li>- Difficult to test, lots of statics</li>
 		  </ul>
 		</div>
 		<div class='right-comparison-50'>
-			<div>
 		<img class='small-slide-image paragraph-icon' src='images/dropwizard-hat.png'
 		     alt='Dropwizard Logo'/>
 		<h4 style="display:inline">Dropwizard</h4>
 		<ul class='no-offset'>
+			<li>+ Has metrics built in</li>
 			<li>+ </li>
-			<li>+ </li>
-			<li>- </li>
+			<li>+</li>
+			<li>- Code tends to look more like java code</li>
+			<li>-</li>
 		  </ul>
+		</div>
+		<div style='display:inline-block'>
+		<img class='small-slide-image paragraph-icon' src='images/scalatra-logo.png'
+		     alt='Scalatra Logo'/>
+		<img class='small-slide-image paragraph-icon' src='images/lift-logo.png'
+		     alt='Lift Logo'/>
+		<img class='small-slide-image paragraph-icon' src='images/spray-logo.png'
+		     alt='Spray Logo'/>
 		</div>			
       </article>
 
@@ -604,6 +606,9 @@ case class StubHeaderBuilder (
       <article>
 		<p class='presenter-notes'>
 			Toby speaking
+			
+			- community is mostly academics
+			- not alot of documentation, major source is typesafe
 		</p>
         <h2>The Community</h2>
       </article>
@@ -611,6 +616,11 @@ case class StubHeaderBuilder (
       <article>
 		<p class='presenter-notes'>
 			Both speaking
+			
+			-good for small projects
+			-need someone who had done scala before
+			-requires more communication within the team, there are just too many ways to do things 
+			-no one person can be too 'smart', the code needs to stay simple enough for others to understand
 		</p>
         <h2>Conclusions</h2>
       </article>
