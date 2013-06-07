@@ -105,6 +105,35 @@
       </article>
 
       <article class='medium'>
+        <h3>The Language: The Basics</h3>
+        <h5><code>val</code> vs. <code>var</code></h5>
+        <pre>
+val someValue = 10
+>> someValue: Int = 10
+someValue = 15
+>> error: reassignment to val
+     someValue = 15
+
+var someVariable = 10
+>> someVariable: Int = 10
+someVariable = 15
+>> someVariable: Int = 15</pre>
+        <h5>Function definition</h5>
+        <pre>
+def computedValue = "message".split("").drop(4)
+def triple(x: Int) = x * 3
+def firstAndLastCharacterOf(string: String) = {
+  val first = string.head
+  val last = string.last
+  Seq(first, last)
+} 
+
+val anonymousFunction = (age: Int, location: String) => { 
+  "I'm " + age + " and I live in " + location 
+}
+      </article>
+
+      <article class='medium'>
 	<p class='presenter-notes'>
 	  Toby speaking
 	</p>
