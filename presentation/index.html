@@ -28,6 +28,7 @@
         <p>Amanda Snyder and Toby Clemson</p>
       </article>
 
+      <!--
       <article>
 	<p class='presenter-notes'>
 	  Toby speaking
@@ -65,6 +66,7 @@
           <li>Conclusions</li>
         </ul>
       </article>
+      -->
 
       <article>
         <h2>Introductions</h2>
@@ -120,7 +122,7 @@ someVariable = 15
 >> someVariable: Int = 15</pre>
         <h5>Function definition</h5>
         <pre>
-def computedValue = "message".split("").drop(4)
+def computedValue = "message" split("") drop(4)
 def triple(x: Int) = x * 3
 def firstAndLastCharacterOf(string: String) = {
   val first = string.head
@@ -154,8 +156,8 @@ var thing2 = None
 >> thing2: None.type = None
 thing2 = Option("Hello") 
 >> error: type mismatch; found:Option[String] required:None.type</pre>
-<h5>Common Mistake: No = Symbol!</h5>
-<pre>
+        <h5>Common Mistake: No <code>=</code> Symbol!</h5>
+        <pre>
 // Without =
 def getSomething() { "Something"} 
 >> getSomething: ()Unit
@@ -289,7 +291,7 @@ def main = {
 			Amanda speaking
 		</p>
         <h3>The Language: Collection Manipulation</h3>
-<h5>Map, mkString, foreach, reduce</h5>
+<h5><code>map</code>, <code>mkString</code>, <code>foreach</code> and <code>reduce</code></h5>
 <div class='left-comparison-60'>
 		<pre>
 val A = Seq(1, 2, 3, 4, 5)
@@ -303,7 +305,7 @@ A foreach print                                >> 12345
 val E = A.map(_.toString).reduce(_+ ";" + _)   >> E: String = 1;2;3;4;5</pre>
 </div>
 
-  <h5>Map vs FlatMap</h5>
+  <h5><code>map</code> vs <code>flatMap</code></h5>
     <pre>
 val Words = Seq("North", "America", "Away", "Day")
 
@@ -314,7 +316,7 @@ Words.map(_.toList)
 Words.flatMap(_.toList)
 >> Seq[Char] = List(N, o, r, t, h, A, m, e, r, i, c, a, A, w, a, y, D, a, y) </pre>
 
-  <h5>Filter</h5>
+  <h5><code>filter</code></h5>
     <pre>
 def whiteList = configuration.downloadUrlsWhiteList
 
@@ -324,11 +326,11 @@ def isUrlNotAllowedToBeDownloaded(downloadUri: Uri): Boolean = {
       </article>
 
       <article class='medium'>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Language: Option/Either</h3>
-<p>Either is good to use with success and failure cases</p>
+<h5><code>Either</code> helps when handling success and failure cases</h5>
 <pre>
 def getResource(): Either[RetrievalError, Resource] = {...}
 
@@ -340,7 +342,7 @@ getResource.right.map{ resource =>
 	case _: UnexpectedFailure => ...
 }.merge
 	</pre>
-<p>Using options to avoid null checking and handle errors in mapping</p>
+<h5><code>Option</code> helps to avoid null checking and reduce ifs</h5>
 <pre>
 def getPageNumber(request: Request[AnyContent]) ={
   request.getQueryString("pageNumber").map(_.toInt).getOrElse(0)
@@ -355,11 +357,11 @@ def getContentType(response: HttpResponse) = {
       </article>
 
       <article class='smaller'>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Language: Enumerations</h3>
-        <div class='build'>
+        <div>
           <div>
             <h5>Java Enumeration</h5>
             <pre>
@@ -411,14 +413,64 @@ def whatShouldIDo(weekday:Weekday) = {
         </div>
       </article>
 
-      <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+      <article class='medium'>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Language: Futures</h3>
+        <h5><code>map</code>, <code>flatMap</code> and <code>recover</code></h5>
+        <pre>
+asyncHttpClient.get("http://www.google.com") flatMap {
+  response => 
+    asyncHttpClient.get(firstLinkIn(response.body))
+} map {
+  response =>
+    response.body.asHtml.title
+} recover {
+  case exception: ConnectException => {
+    log.error("Where have all the googles gone? {}", exception)
+    "title when google is AWOL"
+  }
+  case exception: NoLinksPresentException => {
+    log.warn("What's a google without any links? {}", exception)
+    "title when linkage is a problem"
+  }
+}</pre>
         <ul>
-          <li>map, flatMap, recover</li>
+          <li>Much more powerful than the Java equivalent</li>
+          <li>Functional in nature</li>
         </ul>
+      </article>
+
+      <article class='smaller'>
+        <h3>The Language: Other Features</h3>
+        <h5>Implicits</h5>
+        <pre>
+implicit def intAsString(int: Int): String = s"$int"
+>> intAsString: (int: Int)String
+123456.getBytes
+>> res1: Array[Byte] = Array(49, 50, 51, 52, 53, 54)</pre>
+        <h5>Traits</h5>
+        <ul style='margin: 0'>
+          <li>Like mixins in Ruby</li>
+          <li>Manageable multiple inheritance</li>
+          <li>We use these a lot!</li>
+        </ul>
+        <pre>
+trait Describable {
+  val name: String
+  val attributes: Map[String, String]
+
+  def describe = name + ": " + attributes.mkString(", ")
+}
+
+case class TextField(
+  name: String = "text", 
+  attributes: Map[String, String] = Map("length" -> "10")
+) extends Describable
+
+TextField().describe
+>> res0: String = text: length -> 10</pre>
       </article>
 
       <article class='medium'>
@@ -530,86 +582,91 @@ case class StubHeaderBuilder (
       </article>
 
       <article class='medium'>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Tooling and Techniques: Testing</h3>
-		<div>
-		 	<img class='small-slide-image' src='images/specs2.png'
-	             alt='Specs2 Logo'/>
-			<img class='small-slide-image' src='images/scalatest-logo.jpg'
-			     alt='ScalaTest Logo'/>
-			<img class='small-slide-image' src='images/mockito-logo.png'
-				 alt='Mockito Logo'/>
-			<img class='small-slide-image' src='images/scalaMock-logo.png'
-				alt='Scala Mock Logo'/>
-		</div>
+	<div>
+	  <img class='small-slide-image' src='images/specs2.png'
+	       alt='Specs2 Logo'/>
+	  <img class='small-slide-image' src='images/scalatest-logo.png'
+	       alt='ScalaTest Logo'/>
+	  <img class='small-slide-image' src='images/mockito-logo.png'
+	       alt='Mockito Logo'/>
+	  <img class='small-slide-image' src='images/scalaMock-logo.png'
+	       alt='Scala Mock Logo'/>
+	</div>
         <ul style='margin-top:5px'>
           <li>Specs2:</li>
-		<pre>
+	  <pre>
 "AcceptanceSpec should" in {
   "Load the page when api calls are successful" in {
     ...
     status(response) mustEqual 200
   }
 }</pre>
-			<ul>
- 			<li>model quite difficult to get to grips with
-	 		<li>before/after/around was complicated
-		 	<li>tests run in parallel by default</li>
-		</ul>
+	  <ul>
+ 	    <li>model quite difficult to get to grips with
+	    <li>before/after/around was complicated
+	    <li>tests run in parallel by default</li>
+	  </ul>
           <li>Mockito:</li>
-			<ul>
- 			<li>interop has a few wrinkles but on the whole has been successful.</li>
-			</ul>
+	  <ul>
+ 	    <li>interop has a few wrinkles but on the whole has been successful.</li>
+	  </ul>
           <li>CucumberJVM</li>   
-       		<ul>
-			<li>Poor IDE Support</li>
-			</ul>
+       	  <ul>
+	    <li>Poor IDE Support</li>
+	  </ul>
         </ul>
       </article>
 
       <article>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Tooling and Techniques: IDE</h3>
-		<h4>Intellij vs. Eclipse</h4>
-	    <ul>
-		  <li> Intellij 12 necessary</li>
-		  <li>Play and Scala plugins</li>
-		  <li>False negative</li>
-		</ul>
+	<h4>Intellij vs. Eclipse</h4>
+	<ul>
+	  <li> Intellij 12 necessary</li>
+	  <li>Play and Scala plugins</li>
+	  <li>False negative</li>
+	</ul>
       </article>
 
-      <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+      <article class='medium'>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Tooling and Techniques: Frameworks</h3>
-		<h5>Others: Spray, Lift, Scalatra<h5>
-
-		<div class='left-comparison-50'>
-	 	  <img class='medium-slide-image play-img' src='images/play-logo.png'
-             alt='Play Logo'/>
-		  <ul class='no-offset'>
-			<li>+ Asynchronous way of programming</li>
-			<li>+ Hot reloading</li>
-			<li>- Firing up entire app while testing</li>
-			<li>- Difficult to test, lots of statics</li>
-		  </ul>
-		</div>
-		<div class='right-comparison-50'>
-			<div>
-		<img class='small-slide-image paragraph-icon' src='images/dropwizard-hat.png'
-		     alt='Dropwizard Logo'/>
-		<h4 style="display:inline">Dropwizard</h4>
+	<div class='left-comparison-50'>
+	  <img class='medium-slide-image play-img' src='images/play-logo.png'
+               alt='Play Logo'/>
+	  <ul class='no-offset'>
+	    <li>+ Asynchronous way of programming</li>
+	    <li>+ Hot reloading</li>
+	    <li>- Firing up entire app while testing</li>
+	    <li>- Difficult to test, lots of statics</li>
+	  </ul>
+	</div>
+	<div class='right-comparison-50'>
+	  <div>
+	    <img class='small-slide-image paragraph-icon' src='images/dropwizard-hat.png'
+		 alt='Dropwizard Logo' 
+                 style='max-height: 18%; max-width: 18%; margin: 0; margin-top: 32px;'/>
+	    <h4 style="display:inline">Dropwizard</h4>
 		<ul class='no-offset'>
-			<li>+ </li>
-			<li>+ </li>
-			<li>- </li>
-		  </ul>
-		</div>			
+		  <li>+ </li>
+		  <li>+ </li>
+		  <li>- </li>
+		</ul>
+	  </div>			
+        </div>
+        <hl class='clearfix'></hl>
+        <ul>
+          <li>Others: Spray, Scalatra, Lift</h5>
+        </ul>
+
       </article>
 
       <article>
