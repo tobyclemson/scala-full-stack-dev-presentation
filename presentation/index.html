@@ -247,14 +247,14 @@ def main = {
         </p>
       </article>
 
-      <article >
+      <article class='medium'>
 		<p class='presenter-notes'>
 			Amanda speaking
 		</p>
         <h3>The Language: Collection Manipulation</h3>
-<h5><code>map</code>, <code>mkString</code>, <code>foreach</code> and <code>reduce</code></h5>
-<div class='left-comparison-60'>
-		<pre>
+        <h5><code>map</code>, <code>mkString</code>, <code>foreach</code> and <code>reduce</code></h5>
+        <div class='left-comparison-60'>
+	  <pre>
 val A = Seq(1, 2, 3, 4, 5)
 
 val B = A.map (_ * 2)                         
@@ -270,15 +270,16 @@ A foreach print
 
 val E = A.map(_.toString).reduce(_+ ";" + _) 
   >> E: String = 1;2;3;4;5</pre>
-</div>
-</article>
-<article >
+        </div>
+      </article>
+
+      <article class='medium'>
 	<p class='presenter-notes'>
-		Amanda speaking
+	  Amanda speaking
 	</p>
-  <h3>The Language: More Collection Manipulation</h3>   
-  <h5><code>map</code> vs <code>flatMap</code></h5>
-     <pre class='no-offset'>
+        <h3>The Language: More Collection Manipulation</h3>   
+        <h5><code>map</code> vs <code>flatMap</code></h5>
+        <pre class='no-offset'>
 val Words = Seq("North", "America", "Away", "Day")
 Words.map(_.toList)
 >> Seq[List[Char]] = List(List(N, o, r, t, h), 
@@ -289,8 +290,8 @@ Words.flatMap(_.toList)
 >> Seq[Char] = List(N, o, r, t, h, A, m, e, r, 
                     i, c, a, A, w, a, y, D, a, y) </pre>
     
-  <h5><code>filter</code></h5>
-    <pre class='no-offset'>
+        <h5><code>filter</code></h5>
+        <pre class='no-offset'>
 def whiteList = configuration.downloadUrlsWhiteList
 
 def isUrlNotAllowedToBeDownloaded(downloadUri: Uri): Boolean = {
@@ -329,10 +330,10 @@ def getContentType(response: HttpResponse):Option[HttpResponse] = {
 	</pre>
       </article>
 
-      <article>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+      <article class='medium'>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Language: Enumerations</h3>
         <div>
           <div>
@@ -484,11 +485,11 @@ object EncryptionKey {
       </article>
 
       <article class='medium'>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Language: Example 2</h3>
-		<div class='left-comparison-60'>
+	<div class='left-comparison-60'>
           <pre class='no-offset'>
 case class StubResponseBuilder(
   private val headers: Seq[StubHeader] = Seq.empty) {
@@ -515,14 +516,13 @@ case class StubHeaderBuilder (
       |}
       """.stripMargin
     }
-}
-</pre>
-<ul class='no-offset'>
-	<li>String interpolation</li>
-	<li>Builders use copy</li>
-	<li>Strict string formatting</li>
-</ul>
-</div>
+}</pre>
+          <ul class='no-offset'>
+	    <li>String interpolation</li>
+	    <li>Builders use copy</li>
+	    <li>Strict string formatting</li>
+          </ul>
+        </div>
       </article>
 
 
@@ -531,39 +531,40 @@ case class StubHeaderBuilder (
       </article>
 
       <article>
-		<p class='presenter-notes'>
+	<p class='presenter-notes'>
 			Toby speaking
 		</p>
         <h3>The Tooling and Techniques: Compilation</h3>
         <ul>
           <li>Very slow! All those features come at a cost.</li>
+          <li>Compile time occupies 30-40% or build time</li>
           <li>Developer workstations need to be very powerful</li>
-          <li>We've resorted to using RAMDISKs to run our build in a reasonable time</li>
-          <li>16GB memory, 2.5 GHz, 2 cores</li>
-          <li>Build with clean: 1720 seconds = 28.66 minutes</li>
-          <li>Build without clean: </li>
+          <ul>
+            <li>Most machines: 16GB memory, 2.7 GHz, 2-4 cores
+            <li>Using RAMDISKs to run our build in a reasonable time</li>
+          </ul>
         </ul>
       </article>
 
       <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Tooling and Techniques: Build</h3>
         <ul>
           <li>SBT is the build tool of choice</li>
-			<ul>
-				<li>+ support for multi module projects</li>
-				<li>+ easy to define cross module dependencies</li>
-				<li>+ IDE configuration generated from project definition</li>
-				<li>- steep learning curve</li>
-				<li>Build scripts are just Scala</li>
-			</ul>
+	  <ul>
+	    <li>+ support for multi module projects</li>
+	    <li>+ easy to define cross module dependencies</li>
+	    <li>+ IDE configuration generated from project definition</li>
+	    <li>- steep learning curve</li>
+	    <li>Build scripts are just Scala</li>
+	  </ul>
           <li>Gradle:</li>
-			<ul>
-				<li>+ full Scala support</li>
-				<li>- no real Play support</li>
-			</ul>
+	  <ul>
+	    <li>+ full Scala support</li>
+	    <li>- no real Play support</li>
+	  </ul>
         </ul>
       </article>
 
@@ -647,11 +648,10 @@ case class StubHeaderBuilder (
 		     alt='Dropwizard Logo'/>
 		<h4 style="display:inline">Dropwizard</h4>
 		<ul class='no-offset'>
-			<li>+ Has metrics built in</li>
-			<li>+ </li>
-			<li>+</li>
+			<li>+ Has metrics and operations menu built in</li>
+			<li>+ Embedded HTTP server so easy to deploy</li>
+			<li>+ Uses mature libraries such as Jetty and Jersey internally</li>
 			<li>- Code tends to look more like java code</li>
-			<li>-</li>
 		  </ul>
 		</div>
 		<div style='display:inline-block'>
