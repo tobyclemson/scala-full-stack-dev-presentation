@@ -67,6 +67,35 @@
       </article>
 
       <article class='medium'>
+        <h3>The Language: The Basics</h3>
+        <h5><code>val</code> vs. <code>var</code></h5>
+        <pre>
+val someValue = 10
+>> someValue: Int = 10
+someValue = 15
+>> error: reassignment to val
+     someValue = 15
+
+var someVariable = 10
+>> someVariable: Int = 10
+someVariable = 15
+>> someVariable: Int = 15</pre>
+        <h5>Function definition</h5>
+        <pre>
+def computedValue = "message" split("") drop(4)
+def triple(x: Int) = x * 3
+def firstAndLastCharacterOf(string: String) = {
+  val first = string.head
+  val last = string.last
+  Seq(first, last)
+} 
+
+val anonymousFunction = (age: Int, location: String) => { 
+  "I'm " + age + " and I live in " + location 
+}
+      </article>
+
+      <article class='medium'>
 	<p class='presenter-notes'>
 	  Toby speaking
 	</p>
@@ -87,8 +116,8 @@ var thing2 = None
 >> thing2: None.type = None
 thing2 = Option("Hello") 
 >> error: type mismatch; found:Option[String] required:None.type</pre>
-<h5>Common Mistake: No = Symbol!</h5>
-<pre>
+        <h5>Common Mistake: No <code>=</code> Symbol!</h5>
+        <pre>
 // Without =
 def getSomething() { "Something"} 
 >> getSomething: ()Unit
@@ -223,8 +252,8 @@ def main = {
 			Amanda speaking
 		</p>
         <h3>The Language: Collection Manipulation</h3>
-<h5>Map, mkString, foreach, reduce</h5>
-<div>
+<h5><code>map</code>, <code>mkString</code>, <code>foreach</code> and <code>reduce</code></h5>
+<div class='left-comparison-60'>
 		<pre>
 val A = Seq(1, 2, 3, 4, 5)
 
@@ -247,9 +276,9 @@ val E = A.map(_.toString).reduce(_+ ";" + _)
 	<p class='presenter-notes'>
 		Amanda speaking
 	</p>
-  <h3>The Language: More Collection Manipulation</h3>
-  <h5>Map vs FlatMap</h5>
-    <pre class='no-offset'>
+  <h3>The Language: More Collection Manipulation</h3>   
+  <h5><code>map</code> vs <code>flatMap</code></h5>
+     <pre class='no-offset'>
 val Words = Seq("North", "America", "Away", "Day")
 Words.map(_.toList)
 >> Seq[List[Char]] = List(List(N, o, r, t, h), 
@@ -259,8 +288,8 @@ Words.map(_.toList)
 Words.flatMap(_.toList)
 >> Seq[Char] = List(N, o, r, t, h, A, m, e, r, 
                     i, c, a, A, w, a, y, D, a, y) </pre>
-
-  <h5>Filter</h5>
+    
+  <h5><code>filter</code></h5>
     <pre class='no-offset'>
 def whiteList = configuration.downloadUrlsWhiteList
 
@@ -271,11 +300,11 @@ def isUrlNotAllowedToBeDownloaded(downloadUri: Uri): Boolean = {
       </article>
 
       <article class='medium'>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Language: Option/Either</h3>
-<p>Either is good to use with success and failure cases</p>
+<h5><code>Either</code> helps when handling success and failure cases</h5>
 <pre>
 def getResource(): Either[RetrievalError, Resource] = {...}
 
@@ -287,7 +316,7 @@ getResource.right.map{ resource =>
 	case _: UnexpectedFailure => ...
 }.merge
 	</pre>
-<p>Using options to avoid null checking and handle errors in mapping</p>
+<h5><code>Option</code> helps to avoid null checking and reduce ifs</h5>
 <pre>
 def getPageNumber(request: Request[AnyContent]) ={
   request.getQueryString("pageNumber").map(_.toInt).getOrElse(0)
@@ -305,7 +334,7 @@ def getContentType(response: HttpResponse):Option[HttpResponse] = {
 			Amanda speaking
 		</p>
         <h3>The Language: Enumerations</h3>
-        <div class='build'>
+        <div>
           <div>
             <h5>Java Enumeration</h5>
             <pre class='no-offset'>
@@ -362,14 +391,64 @@ def whatShouldIDo(weekday:Weekday) = {
         </div>
       </article>
 
-      <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+      <article class='medium'>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Language: Futures</h3>
+        <h5><code>map</code>, <code>flatMap</code> and <code>recover</code></h5>
+        <pre>
+asyncHttpClient.get("http://www.google.com") flatMap {
+  response => 
+    asyncHttpClient.get(firstLinkIn(response.body))
+} map {
+  response =>
+    response.body.asHtml.title
+} recover {
+  case exception: ConnectException => {
+    log.error("Where have all the googles gone? {}", exception)
+    "title when google is AWOL"
+  }
+  case exception: NoLinksPresentException => {
+    log.warn("What's a google without any links? {}", exception)
+    "title when linkage is a problem"
+  }
+}</pre>
         <ul>
-          <li>map, flatMap, recover</li>
+          <li>Much more powerful than the Java equivalent</li>
+          <li>Functional in nature</li>
         </ul>
+      </article>
+
+      <article class='smaller'>
+        <h3>The Language: Other Features</h3>
+        <h5>Implicits</h5>
+        <pre>
+implicit def intAsString(int: Int): String = s"$int"
+>> intAsString: (int: Int)String
+123456.getBytes
+>> res1: Array[Byte] = Array(49, 50, 51, 52, 53, 54)</pre>
+        <h5>Traits</h5>
+        <ul style='margin: 0'>
+          <li>Like mixins in Ruby</li>
+          <li>Manageable multiple inheritance</li>
+          <li>We use these a lot!</li>
+        </ul>
+        <pre>
+trait Describable {
+  val name: String
+  val attributes: Map[String, String]
+
+  def describe = name + ": " + attributes.mkString(", ")
+}
+
+case class TextField(
+  name: String = "text", 
+  attributes: Map[String, String] = Map("length" -> "10")
+) extends Describable
+
+TextField().describe
+>> res0: String = text: length -> 10</pre>
       </article>
 
       <article class='medium'>
@@ -489,49 +568,49 @@ case class StubHeaderBuilder (
       </article>
 
       <article class='medium'>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Tooling and Techniques: Testing</h3>
-		<div>
-		 	<img class='small-slide-image' src='images/specs2.png'
-	             alt='Specs2 Logo'/>
-			<img class='small-slide-image' src='images/scalatest-logo.jpg'
-			     alt='ScalaTest Logo'/>
-			<img class='small-slide-image' src='images/mockito-logo.png'
-				 alt='Mockito Logo'/>
-			<img class='small-slide-image' src='images/scalaMock-logo.png'
-				alt='Scala Mock Logo'/>
-		</div>
+	<div>
+	  <img class='small-slide-image' src='images/specs2.png'
+	       alt='Specs2 Logo'/>
+	  <img class='small-slide-image' src='images/scalatest-logo.png'
+	       alt='ScalaTest Logo'/>
+	  <img class='small-slide-image' src='images/mockito-logo.png'
+	       alt='Mockito Logo'/>
+	  <img class='small-slide-image' src='images/scalaMock-logo.png'
+	       alt='Scala Mock Logo'/>
+	</div>
         <ul style='margin-top:5px'>
           <li>Specs2:</li>
-		<pre>
+	  <pre>
 "AcceptanceSpec should" in {
   "Load the page when api calls are successful" in {
     ...
     status(response) mustEqual 200
   }
 }</pre>
-			<ul>
- 			<li>model quite difficult to get to grips with
-	 		<li>before/after/around was complicated
-		 	<li>tests run in parallel by default</li>
-		</ul>
+	  <ul>
+ 	    <li>model quite difficult to get to grips with
+	    <li>before/after/around was complicated
+	    <li>tests run in parallel by default</li>
+	  </ul>
           <li>Mockito:</li>
-			<ul>
- 			<li>interop has a few wrinkles but on the whole has been successful.</li>
-			</ul>
+	  <ul>
+ 	    <li>interop has a few wrinkles but on the whole has been successful.</li>
+	  </ul>
           <li>CucumberJVM</li>   
-       		<ul>
-			<li>Poor IDE Support</li>
-			</ul>
+       	  <ul>
+	    <li>Poor IDE Support</li>
+	  </ul>
         </ul>
       </article>
 
       <article>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
+	<p class='presenter-notes'>
+	  Amanda speaking
+	</p>
         <h3>The Tooling and Techniques: IDE</h3>
 		<div style='display:inline-block'>
 		<img class='medium-slide-image paragraph-icon' src='images/intellij-logo.png'
@@ -548,10 +627,10 @@ case class StubHeaderBuilder (
 		</ul>
       </article>
 
-      <article>
-		<p class='presenter-notes'>
-			Toby speaking
-		</p>
+      <article class='medium'>
+	<p class='presenter-notes'>
+	  Toby speaking
+	</p>
         <h3>The Tooling and Techniques: Frameworks</h3>
 		<div class='left-comparison-50'>
 	 	  <img class='medium-slide-image play-img' src='images/play-logo.png'
@@ -583,24 +662,6 @@ case class StubHeaderBuilder (
 		<img class='small-slide-image paragraph-icon' src='images/spray-logo.png'
 		     alt='Spray Logo'/>
 		</div>			
-      </article>
-
-      <article>
-		<p class='presenter-notes'>
-			Amanda speaking
-		</p>
-        <h3>The Tooling and Techniques: Code Quality Tools</h3>
-<div style='text-align: center'>
-	<img class='medium-slide-image' src='images/scct-logo.png'
-		alt='Scala Code Coverage Tool Logo'/>
-	<img class='medium-slide-image' src='images/jacoco-logo.png'
-		alt='Jacoco Logo'/>
-		<ul>
-		  <li>Difficultly with multi-modules</li>
-		  <li>Generated code gets in the way</li>
-		  <li>Java tools don't give accurate reports</li>
-		</ul>
-</div>
       </article>
 
       <article>
