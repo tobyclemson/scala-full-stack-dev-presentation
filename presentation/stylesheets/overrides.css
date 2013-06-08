@@ -133,6 +133,13 @@
 
 .slides.template-2013naad article .no-offset {
 	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.slides.template-2013naad article .bold-vs {
+	margin: 85px;
+	font-weight:900;
+	font-size: 50px;
 }
 
 .clearfix {
